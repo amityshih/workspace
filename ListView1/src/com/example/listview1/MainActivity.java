@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
         ListView = (ListView) findViewById(R.id.listView1);
         String[] data = {"1","2","3","4","5","6","7","8","9","10"};
         
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_2, data);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data);
         ListView.setAdapter(adapter);
     }
 
