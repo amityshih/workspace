@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
         day = (Spinner) findViewById(R.id.day);
         
         String[] data = getResources().getStringArray(R.array.month);
-        ArrayAdapter <String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,data);
+        ArrayAdapter <String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,data);
         month.setAdapter(adapter);
         month.setOnItemSelectedListener(new OnItemSelectedListener() {
 
@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
 	
 	   for (int i=0;i<DAY_MAX[month];i++){
 		   data[i] =i+1;
-	       ArrayAdapter <String> adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,data);
+	       ArrayAdapter <String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item);
 	       day.setAdapter(adapter);
 		   
 	   }		   
