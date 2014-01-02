@@ -5,15 +5,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.LauncherActivity.ListItem;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 public class MainActivity extends Activity {
     private ListView listView;
+    
+    private final static String[] URLS = {
+	    "http://www.google.com/doodles/moon-festival-mid-autumn-festival-2012",
+		"http://www.google.com/doodles/anton-bernolaks-250th-birthday",
+		"http://www.google.com/doodles/niels-bohrs-127th-birthday",
+		"http://www.google.com/doodles/brazilian-elections-2012",
+		"http://www.google.com/doodles/chuseok-2012",
+		"http://www.google.com/doodles/david-unaipons-140th-birthday",
+		"http://www.google.com/doodles/francisco-gabilondo-solers-105th-birthday",
+		"http://www.google.com/doodles/brian-o-nuallains-101st-birthday",
+		"http://www.google.com/doodles/german-reunification-day-2012",
+		"http://www.google.com/doodles/janusz-korczaks-year"
+    };
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +39,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         
         listView = (ListView) findViewById(R.id.listView1) ;
+        
         
         int[] imageSrc = { R.drawable.g0, R.drawable.g1, R.drawable.g2,
                 R.drawable.g3, R.drawable.g4, R.drawable.g5, R.drawable.g6,
@@ -48,6 +67,19 @@ public class MainActivity extends Activity {
                       R.layout.listview_item, from, to);
 
        listView.setAdapter(adapter);
+       
+       listView.setOnItemClickListener(new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> adapter, View view, int position,
+				long id) {
+			String url = URLS[position];
+			Intent intent = new Intent();
+			intent.setAction(Intent.ACTION_VIEW);
+			intent.setData(Uri.parse(url));
+			startActivity(intent);
+		}
+	});
         
     }
 
