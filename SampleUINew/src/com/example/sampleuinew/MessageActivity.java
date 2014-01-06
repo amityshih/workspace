@@ -1,8 +1,13 @@
 package com.example.sampleuinew;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.ParseObject;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,30 +18,54 @@ public class MessageActivity extends Activity {
    private TextView textView;	
 	
    @Override
-protected void onCreate(Bundle savedInstanceState) {
+   protected void onCreate(Bundle savedInstanceState) {
 	// TODO Auto-generated method stub
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_message);
 	
     textView = (TextView) findViewById(R.id.textView1);
-    
+
     String text = getIntent().getStringExtra("text");
-    textView.setText(text);
+    writeFile(text);
+    
+    textView.setText(readFile());
 	
    }
-   private void writeFiel(String text){
+   
+   private void writeFile(String text){
 	   try {
 		FileOutputStream fos = openFileOutput("message", Context.MODE_APPEND);
 		text +="\n";
 		fos.write(text.getBytes());
 		fos.close();
-	} catch (FileNotFoundException e) {
+    	} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	} catch (IOException e) {
+	    } catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	}
+	   }
 	   
+       Parse.initialize(this, "VuQUgvbgmQ9wSW8r1zVAyMwqKrbf53mqq0ZsuMWs", "WwQCkiYS93nLmREY5jTZMMPeShKfdXdhyUcNrRDN"); 
+       ParseAnalytics.trackAppOpened(getIntent());
+       ParseObject testObject = new ParseObject("Message");
+       testObject.put("Message", text);
+       testObject.saveInBackground();
+
    }
+   
+   private String readFile() {
+           try {
+                   FileInputStream fis = openFileInput("message");
+                   byte[] buffer = new byte[1024];
+                   fis.read(buffer);
+                   
+                   return new String(buffer);
+           } catch (FileNotFoundException e) {
+                   e.printStackTrace();
+           } catch (IOException e) {
+                   e.printStackTrace();
+           }
+           return "";
+   }   
 }
