@@ -1,7 +1,7 @@
 package com.example.calculator;
 
-import com.example.connectnewwork.R;
 
+import android.R.string;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -12,6 +12,11 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
     private EditText editText;
+    boolean d_flag =false; //:/
+    boolean mu_flag =false; //:*
+    boolean m_flag =false; //:-
+    boolean a_flag =false; //:+
+    int ans = 0;        
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +37,76 @@ public class MainActivity extends Activity {
     
     public void onClick(View view) {
     	Log.d("debug", "onCLick");
-        String content = null;
+        String content = null;        
         if (view.getId() == R.id.btn0) {
+           	editText.setText(editText.getText()+ "0"); 
         } else if (view.getId() == R.id.btn1) {
+        	editText.setText(editText.getText()+ "1"); 
         } else if (view.getId() == R.id.btn2) {
-        } else if (view.getId() == R.id.btn3) {
-        } else if (view.getId() == R.id.btn4) {
-        } else if (view.getId() == R.id.btn5) {
-        } else if (view.getId() == R.id.btn6) {
-        } else if (view.getId() == R.id.btn7) {
-        } else if (view.getId() == R.id.btn8) {
-        } else if (view.getId() == R.id.btn9) {
-        } else if (view.getId() == R.id.btn0) {
-        }
-        editText.setText(content);
+           	editText.setText(editText.getText()+ "2"); 
+       } else if (view.getId() == R.id.btn3) {
+          	editText.setText(editText.getText()+ "3"); 
+       } else if (view.getId() == R.id.btn4) {
+         	editText.setText(editText.getText()+ "4"); 
+       } else if (view.getId() == R.id.btn5) {
+        	editText.setText(editText.getText()+ "5"); 
+       } else if (view.getId() == R.id.btn6) {
+        	editText.setText(editText.getText()+ "6"); 
+       } else if (view.getId() == R.id.btn7) {
+        	editText.setText(editText.getText()+ "7"); 
+       } else if (view.getId() == R.id.btn8) {
+        	editText.setText(editText.getText()+ "8"); 
+       } else if (view.getId() == R.id.btn9) {
+        	editText.setText(editText.getText()+ "9"); 
+       } else if (view.getId() == R.id.btnC) {
+    	    d_flag = false;
+    	    mu_flag = false;
+    	    m_flag = false;
+    	    a_flag = false;
+        	editText.setText(""); 
+       } else if (view.getId() == R.id.btnD) {
+    	    if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false)) {
+    	    	d_flag = true;
+    	    }
+    	    content = editText.getText().toString();
+    	    ans= Integer.valueOf(content);
+            editText.setText(""); 
+       } else if (view.getId() == R.id.btnMu) {
+     	    if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false)) {
+     	    	mu_flag = true;
+	        }
+    	    content = editText.getText().toString();
+    	    ans = Integer.valueOf(content);
+            editText.setText(""); 
+       } else if (view.getId() == R.id.btnM) {
+    	    if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false)) {
+    	    	m_flag = true;
+	        }    	   
+    	    content = editText.getText().toString();
+    	    ans= Integer.valueOf(content);
+        	editText.setText(""); 
+       } else if (view.getId() == R.id.btnA) {
+   	        if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false)) {
+   	            a_flag = true;
+            }    	       	   
+   	        content = editText.getText().toString();
+    	    ans= Integer.valueOf(content);
+        	editText.setText(""); 
+       } else if (view.getId() == R.id.btnE) {
+    	    if (d_flag == true) {
+    	    	editText.setText(String.valueOf( ans / (Integer.valueOf(editText.getText().toString()))));
+    	    } else if (mu_flag == true){
+    	    	editText.setText(String.valueOf( ans * (Integer.valueOf(editText.getText().toString()))));    	    	
+    	    } else if (m_flag == true){
+    	    	editText.setText(String.valueOf( ans - (Integer.valueOf(editText.getText().toString()))));    	    	
+    	    } else if (a_flag == true){
+    	    	editText.setText(String.valueOf( ans + (Integer.valueOf(editText.getText().toString()))));    	    	
+    	    }
+    	    d_flag = false;
+    	    mu_flag = false;
+    	    m_flag = false;
+    	    a_flag = false;    	    
+       }
     }
 
 }
