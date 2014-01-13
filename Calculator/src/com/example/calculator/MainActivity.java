@@ -65,28 +65,28 @@ public class MainActivity extends Activity {
     	    a_flag = false;
         	editText.setText(""); 
        } else if (view.getId() == R.id.btnD) {
-    	    if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false)) {
+    	    if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false) && editText.getText().toString()!= "") {
     	    	d_flag = true;
     	    }
     	    content = editText.getText().toString();
     	    ans= Integer.valueOf(content);
             editText.setText(""); 
        } else if (view.getId() == R.id.btnMu) {
-     	    if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false)) {
+     	    if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false) && editText.getText().toString()!= "") {
      	    	mu_flag = true;
 	        }
     	    content = editText.getText().toString();
     	    ans = Integer.valueOf(content);
             editText.setText(""); 
        } else if (view.getId() == R.id.btnM) {
-    	    if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false)) {
+    	    if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false) && editText.getText().toString()!= "") {
     	    	m_flag = true;
 	        }    	   
     	    content = editText.getText().toString();
     	    ans= Integer.valueOf(content);
         	editText.setText(""); 
        } else if (view.getId() == R.id.btnA) {
-   	        if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false)) {
+   	        if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false) && editText.getText().toString()!= "") {
    	            a_flag = true;
             }    	       	   
    	        content = editText.getText().toString();
