@@ -44,55 +44,83 @@ public class MainActivity extends Activity {
         	editText.setText(editText.getText()+ "1"); 
         } else if (view.getId() == R.id.btn2) {
            	editText.setText(editText.getText()+ "2"); 
-       } else if (view.getId() == R.id.btn3) {
+        } else if (view.getId() == R.id.btn3) {
           	editText.setText(editText.getText()+ "3"); 
-       } else if (view.getId() == R.id.btn4) {
+        } else if (view.getId() == R.id.btn4) {
          	editText.setText(editText.getText()+ "4"); 
-       } else if (view.getId() == R.id.btn5) {
-        	editText.setText(editText.getText()+ "5"); 
-       } else if (view.getId() == R.id.btn6) {
+        } else if (view.getId() == R.id.btn5) {
+         	editText.setText(editText.getText()+ "5"); 
+        } else if (view.getId() == R.id.btn6) {
         	editText.setText(editText.getText()+ "6"); 
-       } else if (view.getId() == R.id.btn7) {
+        } else if (view.getId() == R.id.btn7) {
         	editText.setText(editText.getText()+ "7"); 
-       } else if (view.getId() == R.id.btn8) {
+        } else if (view.getId() == R.id.btn8) {
         	editText.setText(editText.getText()+ "8"); 
-       } else if (view.getId() == R.id.btn9) {
+        } else if (view.getId() == R.id.btn9) {
         	editText.setText(editText.getText()+ "9"); 
-       } else if (view.getId() == R.id.btnC) {
+        } else if (view.getId() == R.id.btnC) {
     	    d_flag = false;
     	    mu_flag = false;
     	    m_flag = false;
     	    a_flag = false;
         	editText.setText(""); 
-       } else if (view.getId() == R.id.btnD) {
-    	    if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false) && editText.getText().toString()!= "") {
+        } else if (view.getId() == R.id.btnD) {
+    	    if ((d_flag == true) || (mu_flag == true) || (m_flag == true) || (a_flag == true)) {
     	    	d_flag = true;
-    	    }
-    	    content = editText.getText().toString();
-    	    ans= Integer.valueOf(content);
-            editText.setText(""); 
-       } else if (view.getId() == R.id.btnMu) {
-     	    if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false) && editText.getText().toString()!= "") {
-     	    	mu_flag = true;
-	        }
-    	    content = editText.getText().toString();
-    	    ans = Integer.valueOf(content);
-            editText.setText(""); 
-       } else if (view.getId() == R.id.btnM) {
-    	    if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false) && editText.getText().toString()!= "") {
-    	    	m_flag = true;
-	        }    	   
-    	    content = editText.getText().toString();
-    	    ans= Integer.valueOf(content);
-        	editText.setText(""); 
-       } else if (view.getId() == R.id.btnA) {
-   	        if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false) && editText.getText().toString()!= "") {
-   	            a_flag = true;
-            }    	       	   
-   	        content = editText.getText().toString();
-    	    ans= Integer.valueOf(content);
-        	editText.setText(""); 
-       } else if (view.getId() == R.id.btnE) {
+       	    	mu_flag = false;
+       	    	m_flag = false;
+       	    	a_flag = false;    	    	
+    	    } else {
+       	       if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false) && editText.getText().toString()!= "") {
+    	        	d_flag = true;
+    	       }
+    	       content = editText.getText().toString();
+    	       ans= Integer.valueOf(content);
+               editText.setText("");
+    	    }  
+        } else if (view.getId() == R.id.btnMu) {
+    	    if ((d_flag == true) || (mu_flag == true) || (m_flag == true) || (a_flag == true)) {
+    	    	d_flag = false;
+       	    	mu_flag = true;
+       	    	m_flag = false;
+       	    	a_flag = false;    	    	
+    	    } else {
+       	       if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false) && editText.getText().toString()!= "") {
+     	    	   mu_flag = true;
+	           }
+    	       content = editText.getText().toString();
+    	       ans = Integer.valueOf(content);
+               editText.setText("");
+    	    }   
+        } else if (view.getId() == R.id.btnM) {
+    	    if ((d_flag == true) || (mu_flag == true) || (m_flag == true) || (a_flag == true)) {
+    	    	d_flag = false;
+       	    	mu_flag = false;
+       	    	m_flag = true;
+       	    	a_flag = false;    	    	
+    	    } else {
+        	   if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false) && editText.getText().toString()!= "") {
+    	    	   m_flag = true;
+	           }      	   
+    	       content = editText.getText().toString();
+    	       ans= Integer.valueOf(content);
+        	   editText.setText("");
+    	    }   
+        } else if (view.getId() == R.id.btnA) {
+    	    if ((d_flag == true) || (mu_flag == true) || (m_flag == true) || (a_flag == true)) {
+    	    	d_flag = false;
+       	    	mu_flag = false;
+       	    	m_flag = false;
+       	    	a_flag = true;    	    	
+    	    } else {
+      	       if ((d_flag == false) && (mu_flag == false) && (m_flag == false) && (a_flag == false) && editText.getText().toString()!= "") {
+     	           a_flag = true;
+               }    	       	   
+   	           content = editText.getText().toString();
+    	       ans= Integer.valueOf(content);
+        	   editText.setText("");
+    	    }   
+        } else if (view.getId() == R.id.btnE) {
     	    if (d_flag == true) {
     	    	editText.setText(String.valueOf( ans / (Integer.valueOf(editText.getText().toString()))));
     	    } else if (mu_flag == true){
@@ -106,7 +134,7 @@ public class MainActivity extends Activity {
     	    mu_flag = false;
     	    m_flag = false;
     	    a_flag = false;    	    
-       }
+        }
     }
 
 }
