@@ -20,7 +20,6 @@
     	           android:layout_alignParentRight="true"
     	           android:layout_alignParentTop="true"
     	           android:layout_marginRight="15dp"
-    	           android:onClick="onClick" 
     	           android:background="@drawable/fund_ex" />
 
     	       <ImageButton
@@ -29,8 +28,7 @@
     	           android:layout_height="wrap_content"
     	           android:layout_alignParentTop="true"
     	           android:layout_toLeftOf="@+id/imageBtnFundEx"
-    	           android:background="@drawable/fund_in_over"
-    	           android:onClick="onClick" />
+    	           android:background="@drawable/fund_in_over"/>
 
     	   </RelativeLayout>
 	       

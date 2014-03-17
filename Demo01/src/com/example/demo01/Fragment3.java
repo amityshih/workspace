@@ -19,13 +19,18 @@ import org.kxml2.kdom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import android.widget.AdapterView;
@@ -55,6 +60,9 @@ public class Fragment3 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+ 
+
+    
     }
 
     @Override
@@ -75,6 +83,32 @@ public class Fragment3 extends Fragment {
     	
     	task.execute();
     	
+    	fundIn = (ImageButton) v.findViewById(R.id.imageBtnFundIn);
+    	fundEx = (ImageButton) v.findViewById(R.id.imageBtnFundEx);
+
+    	fundIn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+	        	fundIn.setBackgroundResource(R.drawable.fund_in_over);
+	        	fundEx.setBackgroundResource(R.drawable.fund_ex);
+				goToListView(list_in);//切換到查詢結果顯示界面ListView界面
+				
+			}
+		});   
+    	
+    	fundEx.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+	        	fundIn.setBackgroundResource(R.drawable.fund_in);
+	        	fundEx.setBackgroundResource(R.drawable.fund_ex_over);
+				goToListView(list_ex);//切換到查詢結果顯示界面ListView界面
+				
+			}
+		});    	
         return v;
       }
     private class AsyncCallWS extends AsyncTask<Void, Void, String> {
@@ -162,7 +196,7 @@ public class Fragment3 extends Fragment {
     }
     
     
-    public void onClick(View view) {
+/*    public void onClick(View view) {
     	Log.d("debug", "onCLick");
     	fundEx = (ImageButton) v.findViewById(R.id.imageBtnFundEx);
     	fundIn = (ImageButton) v.findViewById(R.id.imageBtnFundIn);
@@ -177,7 +211,7 @@ public class Fragment3 extends Fragment {
 			//goToListView(list_ex);//切換到查詢結果顯示界面ListView界面
         }
     }  
-    
+  */  
     public class Btn1Observer implements IObserver{
         @Override
         public void success(Object data){
@@ -242,6 +276,9 @@ public class Fragment3 extends Fragment {
 	        final List<String[]>lst =mssg;//新建數組，並賦值
 	        final String[][] msg_tmp = new String[lst.size()][];	
 	        lst.toArray(msg_tmp);
+	        // 取得螢幕解析度       
+			final DisplayMetrics metricsMethodTwo = getResources().getDisplayMetrics();
+            
 	        /*
 	       	for (int i = 0; i < lst.size(); i++){
 	       		String[] mag = lst.get(i);
@@ -284,19 +321,23 @@ public class Fragment3 extends Fragment {
 					s1.setTextColor(getResources().getColor(R.color.red));//字體顏色	
 				    ll1_detail.addView(s1);//放入LinearLayout
 */				    
+
 					LinearLayout ll_detail=new LinearLayout(v.getContext());
-					ll_detail.setOrientation(LinearLayout.HORIZONTAL);		//設置朝向	
-					ll_detail.setPadding(5,5,5,5);//四周留白
+					ll_detail.setOrientation(LinearLayout.HORIZONTAL);		//設置朝向
+					ll_detail.setClickable(false);
+					//ll_detail.setPadding(5,5,5,5);//四周留白
 					
 					if (arg0%10 == 0) {
 						TextView s= new TextView(v.getContext());
 						s.setText("股票型");//TextView中顯示的文字
 						s.setTextSize(14);//字體大小
 						s.setTextColor(getResources().getColor(R.color.black));//字體顏色
-						s.setPadding(1,2,2,1);//四周留白
-					    s.setWidth(160);//寬度
+						//s.setPadding(1,2,2,1);//四周留白
+					    s.setWidth(metricsMethodTwo.widthPixels);//寬度
+					    //Log.d("widthPixels = " + metricsMethodTwo.widthPixels,"ABCDEFG");
 					    s.setBackgroundColor(getResources().getColor(R.color.gray));
 					    s.setGravity(Gravity.LEFT);
+					    s.setClickable(false);
 					    ll_detail.addView(s);//放入LinearLayout						
 					}
 					else
@@ -328,11 +369,21 @@ public class Fragment3 extends Fragment {
 							//s.setTextColor(getResources().getColor(R.color.orange));//字體顏色																
 							s.setPadding(1,2,2,1);//四周留白
 							if (i == 1 ){
-							    s.setWidth(160);//寬度
+								if ((metricsMethodTwo.widthPixels/3*2)>320) {
+								    s.setWidth(metricsMethodTwo.widthPixels- (int)((metricsMethodTwo.widthPixels/3*2)/4) * 4);//寬度								
+								}
+								else{
+								    s.setWidth(160);//寬度									
+								}
 							    s.setGravity(Gravity.LEFT);
 							}
 							else{
-								s.setWidth(80);//寬度
+								if ((metricsMethodTwo.widthPixels/3*2)>320) {
+									s.setWidth(((metricsMethodTwo.widthPixels/3*2)/4));//寬度									
+								}
+								else {
+									s.setWidth(80);//寬度									
+								}
 							    s.setGravity(Gravity.RIGHT);
 							}
 						    ll_detail.addView(s);//放入LinearLayout
@@ -351,9 +402,10 @@ public class Fragment3 extends Fragment {
 				public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,//當點擊列表中的某一項時調用此函數
 						long arg3) //arg2為點擊的第幾項
 				{
-					String cccx=msg[0][arg2];//取出對應項中對應的車次信息
-					Toast.makeText(v.getContext(), cccx.toString(), Toast.LENGTH_SHORT).show();
-					
+					if (arg2%10 != 0) {
+						String cccx=msg[0][arg2];//取出對應項中對應的車次信息
+						Toast.makeText(v.getContext(), cccx.toString(), Toast.LENGTH_SHORT).show();
+					}
 				}        	   
 	           }
 	        );
