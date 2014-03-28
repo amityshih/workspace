@@ -37,63 +37,55 @@
 	   android:layout_width="fill_parent"
        android:background="@color/purple" 	   
 	   android:layout_height="wrap_content">
-	       <TextView 
-	   	   android:id="@+id/listview_detail01" 
-	   	   android:text="Fund" 
-	   	   android:textColor="@color/yollow"
-	   	   android:textSize="12dip"
-	   	   android:textStyle="bold"
-	   	   android:paddingLeft="5dip"
-		   android:layout_width="0dp"
-	  	   android:layout_weight="2"
-	   	   android:layout_height="match_parent">
-	  	   </TextView>
-	  	   <TextView 
-		   android:id="@+id/listview_detail02" 
-	  	   android:text="NAV" 
-	  	   android:textColor="@color/yollow"
+		   <TextView 
+		   android:id="@+id/listview_detail01" 
+		   android:text="基金名稱" 
+		   android:textColor="@color/white"
+		   android:layout_marginLeft="18dp"
+		   android:textSize="16dip"
 		   android:textStyle="bold"
-		   android:textSize="12dip"
-		   android:gravity="right"
-		   android:layout_width="0dp"
-	  	   android:layout_weight="1"
-		   android:layout_height="match_parent">
+		   android:layout_width="wrap_content" 
+		   android:layout_height="wrap_content">
 	   	   </TextView>
-	   	   	   	   
+
+	   	   <TextView 
+		   android:id="@+id/listview_detail02" 
+		   android:text="淨值日期" 
+		   android:textColor="@color/white"
+		   android:textStyle="bold"
+		   android:textSize="16dip"
+		   android:layout_marginLeft="95dp"
+		   android:layout_width="wrap_content" 
+		   android:layout_height="wrap_content">
+	   	   </TextView>
 	   	   <TextView 
 		   android:id="@+id/listview_detail03" 
-		   android:text="Change" 
-		   android:textSize="12dip"
-		   android:textColor="@color/yollow"
+		   android:text="淨值" 
+		   android:textSize="16dip"
+		   android:textColor="@color/white"
 		   android:textStyle="bold"
-		   android:gravity="right"
-		   android:layout_width="0dp"
-	  	   android:layout_weight="1"
-		   android:layout_height="match_parent">
+		   android:layout_marginLeft="35dp"
+		   android:layout_width="wrap_content" 
+		   android:layout_height="wrap_content">
 	   	   </TextView>
-	   	   
 	   	   <TextView 
 		   android:id="@+id/listview_detail04" 
-		   android:text="Change%" 
-		   android:textColor="@color/yollow"
+		   android:text="漲跌" 
+		   android:textColor="@color/white"
+		   android:layout_marginLeft="45dp"
 		   android:textStyle="bold"
-		   android:textSize="12dip"
-		   android:gravity="right"
-		   android:layout_width="0dp"
-	  	   android:layout_weight="1"
-		   android:layout_height="match_parent">
+		    android:textSize="16dip"
+		   android:layout_width="wrap_content" 
+		   android:layout_height="wrap_content">
 	   	   </TextView>
-	   	   
 	   	   <TextView 
 		   android:id="@+id/listview_detail05" 
-		   android:text="Date" 
-		   android:textColor="@color/yollow"
+		   android:text="漲跌幅" 
+		   android:textColor="@color/white"
+		   android:layout_marginLeft="42dp"
 		   android:textStyle="bold"
-		   android:textSize="12dip"
-		   android:gravity="right"
-	   	   android:paddingRight="20dip"
-		   android:layout_width="0dp"
-	  	   android:layout_weight="1"
+		   android:textSize="16dip"
+		   android:layout_width="wrap_content" 
 		   android:layout_height="wrap_content">
 	   	   </TextView>
 	   </LinearLayout>
@@ -103,10 +95,7 @@
 	      android:layout_width="fill_parent" 
 	      android:layout_height="wrap_content"
 	      android:choiceMode="singleChoice"
-          android:divider="@color/gray"
-          android:dividerHeight="0.5dp"
-	   	  android:background="@color/black" >	     
-          <!-- android:listSelector="@color/gray" -->
-	      <!-- android:cacheColorHint="@color/white" -->
+          android:cacheColorHint="#00000000" >
+	   	  <!-- android:background="#ffcc66" -->	     
 	   </ListView>
 </LinearLayout>
