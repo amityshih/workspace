@@ -20,7 +20,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
@@ -31,7 +32,7 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 
-public class Fragment2 extends Fragment {
+public class Fragment5 extends Fragment {
 	private static final String URL = "http://220.130.182.215/FsitAppWebSvc/AppSvc.asmx"; 
 	private static final String NAMESPACE = "http://tempuri.org/";  
 	private static final String SOAP_ACTION = "http://tempuri.org/GetTodayNav"; 
@@ -41,11 +42,12 @@ public class Fragment2 extends Fragment {
     private ImageButton fundEx;
     private ImageButton fundIn;
     private ProgressDialog dialog;    
+    private ListView ListView1;
+    
+    public MainActivity MainActv;
     
 	List<String[]> list_in = new ArrayList<String[]>();
 	List<String[]> list_ex = new ArrayList<String[]>();
-	//private String[][] list_in ;
-	//private String[][] list_ex ;
 	List<String> fund_type_in = new ArrayList<String>();
 	List<String> fund_type_ex = new ArrayList<String>();
 
@@ -53,49 +55,53 @@ public class Fragment2 extends Fragment {
 
 	 final Runnable mUpdateResults = new Runnable() {
         public void run() {
- 	       goToListView(list_in,fund_type_in);
- 	       dialog.dismiss();
+        	if (MainActv.f5param == "ex") {
+        		fundIn.setBackgroundResource(R.drawable.fund_in);
+            	fundEx.setBackgroundResource(R.drawable.fund_ex_over);
+    			goToListView(list_ex,fund_type_ex);//切換到查詢結果顯示界面ListView界面
+         	}
+        	else{
+            	fundIn.setBackgroundResource(R.drawable.fund_in_over);
+            	fundEx.setBackgroundResource(R.drawable.fund_ex);
+    			goToListView(list_in,fund_type_in);//切換到查詢結果顯示界面ListView界面        		
+            }
+       		ListView1.setSelection(MainActv.f5FirstVisibleItemPer);    
+      		dialog.dismiss();
         }
     };
-	
+
+    
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState); 
-    }
+        //setRetainInstance(true);
+
+	}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState) {
         // TODO Auto-generated method stub
-        Log.d("onCreateViewStart", "onCreateViewStart");
-        v = inflater.inflate(R.layout.fragment2_list, container, false);
+        v = inflater.inflate(R.layout.fragment5_list, container, false);
 
-        //取得螢幕解析度
-		//final DisplayMetrics metricsMethodTwo = getResources().getDisplayMetrics();
-       
-		//LinearLayout Linear_dtl01 = (LinearLayout)v.findViewById(R.id.LinearLayout_detail01); 
-		//Log.d("metricsMethodTwo.widthPixels=" + metricsMethodTwo.widthPixels , "AAAAAAAAAAAAAAAAAAAAAA");
-	    dialog = ProgressDialog.show(v.getContext(), "","數據加值中請稍後",true);
-        getData();
-        
-        Log.d("onCreateViewEnd", "onCreateViewEnd");
-   	    	
     	fundIn = (ImageButton) v.findViewById(R.id.imageBtnFundIn);
     	fundEx = (ImageButton) v.findViewById(R.id.imageBtnFundEx);
-
+    	ListView1 =(ListView) v.findViewById(R.id.ListView_detail);
+        dialog = ProgressDialog.show(v.getContext(), "","數據加值中請稍後",true);
+        getData();
+   	    	
     	fundIn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-		        Log.d("fundInonClickStart", "fundInonClickStart");
 			    dialog = ProgressDialog.show(v.getContext(), "","數據加值中請稍後",true);
 	        	fundIn.setBackgroundResource(R.drawable.fund_in_over);
 	        	fundEx.setBackgroundResource(R.drawable.fund_ex);
 				goToListView(list_in,fund_type_in);//切換到查詢結果顯示界面ListView界面
 			    dialog.dismiss();
-		        Log.d("fundInonClickEnd", "fundInonClickEnd");
+			    MainActv.f5param = "in";
 			}
 		});   
     	
@@ -104,15 +110,28 @@ public class Fragment2 extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-		        Log.d("fundExonClickStart", "fundExonClickStart");
 			    dialog = ProgressDialog.show(v.getContext(), "","數據加值中請稍後",true);
 	        	fundIn.setBackgroundResource(R.drawable.fund_in);
 	        	fundEx.setBackgroundResource(R.drawable.fund_ex_over);
 				goToListView(list_ex,fund_type_ex);//切換到查詢結果顯示界面ListView界面
 			    dialog.dismiss();
-		        Log.d("fundExonClickEnd", "fundExonClickEnd");
+			    MainActv.f5param = "ex";
 			}
 		});    	
+    	
+        
+    	ListView1.setOnScrollListener(new OnScrollListener(){
+    	    @Override
+    	    public void onScrollStateChanged(AbsListView absListView, int scrollState) {
+
+    	    }
+    	    
+    	    @Override
+    	    public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+			    MainActv.f5FirstVisibleItem = firstVisibleItem;
+    	    }
+    	});
+           
         return v;
       }
  
@@ -121,10 +140,8 @@ public class Fragment2 extends Fragment {
     	Thread networkThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-		        Log.d("getDataStart", "getDataStart");
 				doService();
                 cwjHandler.post(mUpdateResults); 
-		        Log.d("getDataEnd", "getDataEnd");
 			}
         }); 
         
@@ -133,7 +150,6 @@ public class Fragment2 extends Fragment {
 
     private void doService()
     {
-        Log.d("doServiceStart", "doServiceStart");
     	try
 		{
 	    	final SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
@@ -176,12 +192,10 @@ public class Fragment2 extends Fragment {
 			Log.e("----Error---", e.getMessage());
 			e.printStackTrace();  
 		}
-         Log.d("doServiceEnd", "doServiceEnd");
-   }
+    }
     
     private String[][] parseXML(SoapObject result)
     {
-        Log.d("parseXMLStart", "parseXMLStart");
     	int rowSize = result.getPropertyCount();
     	String[][] resultArray;
     	resultArray = new String[rowSize][9];
@@ -201,21 +215,12 @@ public class Fragment2 extends Fragment {
     		resultArray[i][8] = tempResult.getProperty("FundTypeSymbolName").toString();
     	}
     	
-        Log.d("parseXMLEnd", "parseXMLEnd");
     	return resultArray;
     }
     
     
 	 public void goToListView(List<String[]> mssg,List<String> ftype)//去ListView界面
 	 {
-//		 	msgg=mssg;//賦值引用給全局數組,用來實現返回按鈕功能
-//	        setContentView(R.layout.listview);//切換界面
-//	        curr=WhichView.LIST_VIEW;//標識界面
-	        //final List<String[]>lst =mssg;//新建數組,並賦值
-	        //final String[][] msg_tmp = new String[mssg.size()][];	
-	        //mssg.toArray(msg_tmp);
-	        //final List<String[]>lst;//新建數組,並賦值
-	        Log.d("goToListViewStart", "goToListViewStart");
 	    	final List<String[]> lst = new ArrayList<String[]>();
 	        
 	        for (int i = 0; i < ftype.size();i++){
@@ -267,16 +272,13 @@ public class Fragment2 extends Fragment {
 					LinearLayout ll_detail=new LinearLayout(v.getContext());
 					ll_detail.setOrientation(LinearLayout.HORIZONTAL);		//字體顏色
 					ll_detail.setClickable(false);
-					//ll_detail.setPadding(5,5,5,5);//四周留白
 					
 					if (lst.get(arg0)[1] == "") {
 						TextView s= new TextView(v.getContext());
 						s.setText(lst.get(arg0)[0]);//TextView中顯示的文字
 						s.setTextSize(12);//字體大小
 						s.setTextColor(getResources().getColor(R.color.white));//字體顏色
-						//s.setPadding(1,2,2,1);//四周留白
 					    s.setWidth(metricsMethodTwo.widthPixels);//寬度
-					    //Log.d("widthPixels = " + metricsMethodTwo.widthPixels,"ABCDEFG");
 					    s.setBackgroundColor(getResources().getColor(R.color.gray));
 					    s.setGravity(Gravity.LEFT);
 					    s.setClickable(false);
@@ -294,10 +296,7 @@ public class Fragment2 extends Fragment {
 	    						s.setText(lst.get(arg0)[i]);//TextView中顯示的文字						
 							}
 								
-		                    //Log.d("msg[" + arg0 + "][" + i + "]", msg[arg0][i]);
-		                    //Log.d("msg[" + arg0 + "][" + i + "]", msg[arg0][i]);
 							s.setTextSize(10);//字體大小
-							//Log.d("Integer.valueOf(msg[5][arg0])" + msg[5][arg0], "DDDDDDDD");
 							if (i == 2)
 								s.setTextColor(getResources().getColor(R.color.yollow));//字體顏色
 							else if (i == 6)	
@@ -314,7 +313,6 @@ public class Fragment2 extends Fragment {
 									s.setTextColor(getResources().getColor(R.color.orange));//字體顏色									
 								}
 							}	
-							//s.setTextColor(getResources().getColor(R.color.orange));//字體顏色																
 							if (i == 2 ){
 								if ((metricsMethodTwo.widthPixels/3*2)>320) {
 								    s.setWidth(metricsMethodTwo.widthPixels- (int)((metricsMethodTwo.widthPixels/3*2)/4) * 4);								
@@ -322,7 +320,6 @@ public class Fragment2 extends Fragment {
 								else{
 								    s.setWidth(metricsMethodTwo.widthPixels-320);//寛度								
 								}
-							    //s.setWidth(metricsMethodTwo.widthPixels-340);//寛度					
 								if ((metricsMethodTwo.widthPixels/3*2)>320) 
 									s.setPadding(3,2,1,2);//四周留白   
 								else
@@ -330,10 +327,6 @@ public class Fragment2 extends Fragment {
 								    
 							    s.setGravity(Gravity.LEFT);
 							}
-							/*else if (i == 6){
-								s.setWidth(100);//寛度									
-							    s.setGravity(Gravity.RIGHT);
-							}*/
 							else{
 								if ((metricsMethodTwo.widthPixels/3*2)>320) {
 									s.setWidth(((metricsMethodTwo.widthPixels/3*2)/4));//寛度									
@@ -341,7 +334,6 @@ public class Fragment2 extends Fragment {
 								else {
 									s.setWidth(80);//寛度									
 								}
-								//s.setWidth(80);//寛度	
 								if  (i == 6){
 									if ((metricsMethodTwo.widthPixels/3*2)>320) 
 										s.setPadding(1,2,3,2);//四周留白   
@@ -377,7 +369,6 @@ public class Fragment2 extends Fragment {
 				}        	   
 	           }
 	        );
-	        Log.d("goToListViewEnd", "goToListViewEnd");
 	 }
-    
+
 }

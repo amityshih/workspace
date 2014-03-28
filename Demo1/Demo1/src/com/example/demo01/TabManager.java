@@ -59,65 +59,29 @@ public class TabManager implements TabHost.OnTabChangeListener {
 
         TabInfo info = new TabInfo(tag, clss, args);
 
-    	//Log.d("Amity Log", "mTabHost.getCurrentTab() =" + mTabHost.getCurrentTab());
-        
-        //if (mTabHost.getCurrentTab() == -1  || mTabHost.getCurrentTab() == 0) {
 
         info.fragment = mActivity.getSupportFragmentManager().findFragmentByTag(tag);
         info.MainActv = MainActv;
-    	/*Log.d("Amity Log", "info.fragment =" + info.fragment);
-    	if (info.fragment != null) {
-            FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();
-   		    ft.remove(info.fragment);
-   		    ft.commit();
-   	    	Log.d("Amity Log", "info.fragment  ft.commit() = " + info.fragment);
-    	}*/
 
         if (info.fragment != null && !info.fragment.isDetached()) {
             FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();
-        	//Log.d("Amity Log", "info.fragment =" + info.fragment);
-            ft.detach(info.fragment);
-            /*if (info.fragment.isAdded()) {
-               ft.remove(info.fragment);
-            }*/
+             ft.detach(info.fragment);
             ft.commit();
-        }
-
-       	
-    	//Log.d("Amity Log", "mTabs.put");
+        }       	
         mTabs.put(tag, info);
-    	//Log.d("Amity Log", "mActivity.getSupportFragmentManager().popBackStack()");
-    	//mActivity.getSupportFragmentManager().popBackStack();
-    	//Log.d("Amity Log", "mTabHost.addTabStart");
-        //Log.d("Amity Log", "info.fragment.isAdded() =" + info.fragment.isAdded());
-        //if (! info.fragment.isAdded()){
-        //if (info.fragment == null) {
-        //    Log.d("Amity Log", "else info.fragment =" + info.fragment);
-        //ft.remove(info.fragment);
-
         mTabHost.addTab(tabSpec);
-        //}
-        //}
-    	//Log.d("Amity Log", "mTabHost.addTabEnd");
-        //} 
-        
         return info;
     }
 
     @Override
     public void onTabChanged(String tabId) {
-     //Log.d("Amity Log","tabId =" + tabId);	
      TabInfo newTab = mTabs.get(tabId);
-        //Log.d("Amity Log", "onTabChanged");
 
         if (mLastTab != newTab) {
             FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();
             if (mLastTab != null) {
                 if (mLastTab.fragment != null) {
-           		    //ft.remove(mLastTab.fragment);
                     ft.detach(mLastTab.fragment);
-           		    //ft.remove(mLastTab.fragment);
-           		    //ft.commit();
 
                 }
             }
@@ -126,11 +90,9 @@ public class TabManager implements TabHost.OnTabChangeListener {
                 newTab.fragment = Fragment.instantiate(mActivity,
                         newTab.clss.getName(), newTab.args);
                 if (newTab.fragment == null) {
-                	//Log.d("Amity Log", "Add fragment = " + newTab.fragment);
                     ft.add(mContainerId, newTab.fragment, newTab.tag);
                     ft.detach(mLastTab.fragment);
                 } else {
-                	//Log.d("Amity Log", "Replace fragment = " + newTab.fragment);
                     mActivity.getSupportFragmentManager().popBackStack();
                     ft.replace(mContainerId, newTab.fragment);
                     ft.attach(newTab.fragment);
