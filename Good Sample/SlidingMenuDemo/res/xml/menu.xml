@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <Preference
+        android:key="a"
+        android:title="第一个MENU"
+        />
+
+    <Preference
+        android:key="b"
+        android:title="第二个MENU"
+        />
+    <Preference
+        android:key="c"
+        android:title="第三个MENU"
+        />
+    <Preference
+        android:key="d"
+        android:title="第四个MENU"
+        />
+     <Preference
+        android:key="e"
+        android:title="第五个MENU"
+        />
+            <Preference
+        android:key="f"
+        android:title="第六个MENU"
+        />
+            <Preference
+        android:key="g"
+        android:title="第七个MENU"
+        />
+                <Preference
+        android:key="h"
+        android:title="第八个MENU"
+        />
+                <Preference
+        android:key="i"
+        android:title="第九个MENU"
+        />
+                    <Preference
+        android:key="j"
+        android:title="第十个MENU"
+        />
+                    <Preference
+        android:key="k"
+        android:title="第十一个MENU"
+        />
+                        <Preference
+        android:key="l"
+        android:title="第十二个MENU"
+        />
+                        <Preference
+        android:key="m"
+        android:title="第十三个MENU"
+        />
+                        
+    <Preference
+        android:key="n"
+        android:title="第N个MENU"
+        />
+
+
+</PreferenceScreen>
