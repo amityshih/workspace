@@ -1,0 +1,26 @@
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>Google Maps JavaScript API v3 Example: Marker Animations</title>
+
+<script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=true">
+</script>
+<script type="text/javascript">      
+	function initialize() {        
+		var mapOptions = {          
+			center: new google.maps.LatLng(25.047308, 121.517284),          
+			zoom: 15,          
+			mapTypeId: google.maps.MapTypeId.ROADMAP        
+			};        
+		var map = new google.maps.Map(document.getElementById("map_canvas"), 
+			mapOptions);      
+		}    
+</script>
+
+</head>
+<body style="margin:0px; padding:0px;" onload="initialize()">
+  <div id="map_canvas" style="width:100%; height:100%"></div>
+</body>
+</html>
